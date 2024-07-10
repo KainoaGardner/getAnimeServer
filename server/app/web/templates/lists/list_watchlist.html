@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}Watchlist{% endblock %} {% block css
+%} 
+
+<link rel="stylesheet" href="../static/list.css" />
+
+{% if theme=="light" %}
+<link rel="stylesheet" href="../static/list_light.css" />
+{% else %}
+<link rel="stylesheet" href="../static/list_dark.css" />
+{% endif %}
+{% endblock %} {% block content %}
+
+
+<div class="body">
+<div class="sub_body light_body dark_body">
+
+<div class="main_top">
+  <h1 class="main_text">{{user["username"]}}'s Watchlist ({{count}})</h1>
+
+<div class="watchlist_main">
+<form action="add/id" method="post">
+      <input class="watchlist_input dark_input light_input" type="number" name="anime_id" value="Enter MAL ID" required/>
+      <input class="anime_button main_button dark_button light_button" type="submit" name="add" value="add" />
+</form>
+
+<form action="clear" method="post">
+  <input class="anime_button main_button dark_button light_button" type="submit" name="clear" value="clear all" />
+</form>
+</div>
+</div>
+
+
+<form class="sort_block" action="" method="post">
+  <input class="sort_button sort_light sort_dark" type="submit" name="recent" value="Recent"/>
+  <input class="sort_button sort_light sort_dark" type="submit" name="name" value="Name"/>
+  <input class="sort_button sort_light sort_dark" type="submit" name="id" value="Id"/>
+</form>
+<ol>
+  {% for anime in watchlist %}
+  <li class="anime_block dark_body light_body ">
+    <img class="list_image light_list_image dark_list_image" src={{ anime[2] }}>
+    <div class="anime_text_block">
+    <p class="anime_text anime_title" > {{anime[1]}}</p>
+    <p class="anime_text">ID: {{anime[0]}} </p>
+    </div>
+    <form action="delete/{{anime[0]}}" method="post">
+      <input class="anime_button light_button dark_button" type="submit" name="delete" value="Remove" />
+    </form>
+
+  </li>
+  {% endfor %}
+</ol>
+</div>
+</div>
+{% endblock %}

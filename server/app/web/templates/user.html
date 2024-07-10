@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}User{% endblock %}{% block css %}
+<link rel="stylesheet" href="../static/list.css" />
+{% if theme=="light" %}
+<link rel="stylesheet" href="../static/list_light.css" />
+{% else %}
+<link rel="stylesheet" href="../static/list_dark.css" />
+{% endif %}
+
+{%
+endblock %} {% block content %}
+
+<div class="body">
+  <div class="sub_body dark_body light_body">
+
+
+<h1>{{user["username"]}}</h1>
+
+
+<form action="delete_user" method="delete">
+  <input class="link2_button dark_button light_button" type="submit" name="delete_user" value="Delete Account">
+</form>
+  </div>
+  </div>
+
+{% endblock %}
