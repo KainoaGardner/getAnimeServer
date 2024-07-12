@@ -1,9 +1,8 @@
 from app.functions.webscraper import webscrape
 from app.other import day_dict
-from app.tables import UserModel, WatchingModel
+from app.tables import UserModel
 
 from datetime import date
-from flask_jwt_extended import get_jwt_identity, jwt_required
 import json
 import requests
 
@@ -12,7 +11,7 @@ def list_today(user_id):
     today = date.today()
     week = date(today.year, today.month, today.day).strftime("%V")
 
-    with open("server/weekly.json", "r") as f:
+    with open("weekly.json", "r") as f:
         json_object = json.load(f)
 
     if "week" not in json_object or json_object["week"] != str(week):
@@ -30,7 +29,7 @@ def get_airing(user_id, today):
         return {"msg": "log in"}
     day = day_dict[today.weekday()]
 
-    with open("server/weekly.json", "r") as f:
+    with open("weekly.json", "r") as f:
         json_object = json.load(f)
         for show in user.watching:
             show_id = show.show_id
@@ -85,13 +84,13 @@ def list_all():
     today = date.today()
     week = date(today.year, today.month, today.day).strftime("%V")
 
-    with open("server/season.json", "r") as f:
+    with open("season.json", "r") as f:
         json_object = json.load(f)
 
     if "week" not in json_object or json_object["week"] != str(week):
         get_season_anime(week)
 
-    with open("server/season.json", "r") as f:
+    with open("season.json", "r") as f:
         json_object = json.load(f)
         return json_object["data"]
 
@@ -118,7 +117,7 @@ def get_season_anime(week):
 
         page += 1
 
-    with open("server/season.json", "w") as f:
+    with open("season.json", "w") as f:
         weekly_object = json.dumps(result)
         f.write(weekly_object)
 
